@@ -1,0 +1,29 @@
+﻿@model RePurpose.Models.ProductCardModel
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="product-detail">
+    <h1>@Model.Name</h1>
+    <img src="@Model.ImageUrl" alt="@Model.Name" style="max-width: 300px;" />
+    <h3>Brand: @Model.Brand</h3>
+    <h4>Category: @Model.CategoryName</h4>
+    <p>@Model.ShortDescription</p>
+    <p><strong>Price:</strong> R @Model.Price</p>
+    <p><strong>Stock Available:</strong> @Model.StockCount</p>
+    <p><strong>Part Number:</strong> @Model.PartNumber</p>
+    <p><strong>Manufacturer:</strong> @Model.Manufacturer</p>
+
+    @if (Model.TechnicalSpecs?.Count > 0)
+    {
+        <h4>Technical Specifications</h4>
+        <ul>
+            @foreach (var spec in Model.TechnicalSpecs)
+            {
+                <li><strong>@spec.Key:</strong> @spec.Value</li>
+            }
+        </ul>
+    }
+
+    <a href="/Products/Index">← Back to Products</a>
+</div>

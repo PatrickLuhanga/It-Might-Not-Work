@@ -1,0 +1,62 @@
+﻿@model RePurpose.Models.ProductBrowseViewModel
+
+@{
+    ViewData["Title"] = "Browse Components";
+}
+
+<div class="container">
+    <h2 class="text-center mt-4 mb-4">Browse RePurposed Components</h2>
+
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-6">
+            <form method="get" class="d-flex">
+                <input type="text" name="CurrentSearchQuery" value="@Model.CurrentSearchQuery" class="form-control me-2" placeholder="Search products..." />
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        @foreach (var product in Model.Products)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <a href="/Products/Details/@product.Id" class="text-decoration-none text-dark">
+                        <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name" style="height: 200px; object-fit: cover;" />
+                        <div class="card-body">
+                            <h5 class="card-title text-center">@product.Name</h5>
+                            <p class="card-text text-muted text-center">@product.Brand</p>
+                            <p class="card-text text-center">@product.ShortDescription</p>
+                            <p class="text-center"><strong>R @product.Price</strong></p>
+                            <div class="text-center">
+                                <span class="badge @(product.StockCount > 0 ? "bg-success" : "bg-secondary")">
+                                    @(product.StockCount > 0 ? "In Stock" : "Out of Stock")
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+
+    @if (Model.TotalPages > 1)
+    {
+        <nav aria-label="Product pagination">
+            <ul class="pagination justify-content-center mt-4">
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                        <a class="page-link" href="?CurrentPage=@i">@i</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    }
+
+    @if (!Model.Products.Any())
+    {
+        <p class="text-muted text-center">No products found based on the selected filters.</p>
+    }
+</div>
+

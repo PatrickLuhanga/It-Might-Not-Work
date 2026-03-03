@@ -1,0 +1,38 @@
+﻿@model IEnumerable<RePurpose.Models.AccountsModel>
+
+@{
+    ViewData["Title"] = "Accounts List";
+}
+
+<h2>Accounts List</h2>
+
+<p>
+    <a asp-action="Create">Create New Account</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Username</th>
+            <th>Role</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Email</td>
+                <td>@item.Username</td>
+                <td>@item.Role</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
